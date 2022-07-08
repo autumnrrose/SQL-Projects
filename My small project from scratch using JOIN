@@ -1,0 +1,95 @@
+/* Create table about the people and what they do here */
+
+CREATE TABLE actorsmovies (ID INTEGER, name TEXT, movies TEXT);
+
+INSERT INTO actorsmovies VALUES
+(1, "Shailene_Woodley", "The_Spectacular_Now");
+INSERT INTO actorsmovies VALUES
+(2, "Miles_Teller", "Spectacular_Now");
+INSERT INTO actorsmovies VALUES
+(3, "Edvin_Ryding", "Gåsmamman");
+INSERT INTO actorsmovies VALUES
+(4, "Omar_Rudberg", "Rollercoaster");
+INSERT INTO actorsmovies VALUES
+(5, "Robin_Williams", "Mrs_Doubtfire");
+INSERT INTO actorsmovies VALUES
+(6, "Liza Koshy", "Work_It");
+
+
+CREATE TABLE demographics
+(ID INTEGER, age INTEGER, spouse TEXT, years_acting INTEGER);
+
+INSERT INTO demographics VALUES 
+(1, 30, null, 26);
+INSERT INTO demographics VALUES 
+(2, 35, "Keleigh_Sperry", 20);
+INSERT INTO demographics VALUES 
+(3, 19, null, 13);
+INSERT INTO demographics VALUES 
+(4, 23, null, 10);
+INSERT INTO demographics VALUES
+(5, 63, "Susan Schneider", 38);
+INSERT INTO demographics VALUES
+(6, 26, null, 10);
+
+
+CREATE TABLE financials
+(id INTEGER PRIMARY KEY AUTOINCREMENT, gender TEXT, highest_degree TEXT, net_worth_mill INTEGER);
+INSERT INTO financials VALUES
+(1, "female", "highschool_equivalent", 12.0);
+INSERT INTO financials VALUES
+(2, "male", "Bacherlors", 10.0);
+INSERT INTO financials VALUES
+(3, "male", "highschool_equivalent", 1.5);
+INSERT INTO financials VALUES
+(4, "male", "highschool_equivalent", 4.0);
+INSERT INTO financials VALUES
+(5, "male", "Doctor_of_Fine_Arts", 50.0);
+INSERT INTO financials VALUES
+(6, "female", "Bachelors", 6.0);
+
+
+/* implicit inner join to see information across all tables created */
+SELECT * FROM actorsmovies, demographics, financials
+WHERE actorsmovies.ID = demographics.ID = financials.ID;
+
+
+/* explicit inner join:
+Names of actors, gender, net worth, and years in acting */
+
+SELECT actorsmovies.name, demographics.years_acting, financials.net_worth_mill, financials.gender FROM actorsmovies
+JOIN demographics
+ON actorsmovies.ID = demographics.ID
+JOIN financials
+ON actorsmovies.ID = financials.ID;
+
+/*
+---does education contribute to net worth?--- 
+It appears that it doesn't!
+While Miles Teller and Liza Koshy both earned a           Bachelor's degree, Shailene Woodley makes 1.6 million     more than both combined on average
+*/
+
+SELECT financials.net_worth_mill, financials.highest_degree, actorsmovies.name FROM financials
+JOIN actorsmovies
+ON financials.ID = actorsmovies.ID;
+
+/* 
+I believe that the the more years spent acting and the older the person is, the higher their net worth is.
+Don't take it from me, let's look at the data:
+*/
+
+SELECT actorsmovies.name, demographics.age, demographics.years_acting, financials.net_worth_mill FROM actorsmovies
+JOIN demographics
+ON actorsmovies.ID = demographics.ID
+JOIN financials
+ON actorsmovies.ID = financials.ID;
+/*
+As actors pass that 15-20+ year threshold, they start making significantly more! All of the actors are ranked from highest to lowest net worth:
+
+1. Robin Williams - 38 - $50
+2. Shailene Woodley - 26 - $12
+3. Miles Teller - 20 - $10
+4. Liza Koshy - 10 - $6
+5. Omar Rudberg - 10 - $4
+6. Edvin Ryding - 13 - $1.5
+*/
