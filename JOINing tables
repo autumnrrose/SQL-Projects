@@ -1,0 +1,84 @@
+CREATE TABLE persons (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fullname TEXT,
+    age INTEGER);
+    
+INSERT INTO persons (fullname, age) VALUES ("Bobby McBobbyFace", "12");
+INSERT INTO persons (fullname, age) VALUES ("Lucy BoBucie", "25");
+INSERT INTO persons (fullname, age) VALUES ("Banana FoFanna", "14");
+INSERT INTO persons (fullname, age) VALUES ("Shish Kabob", "20");
+INSERT INTO persons (fullname, age) VALUES ("Fluffy Sparkles", "8");
+
+CREATE table hobbies (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    person_id INTEGER,
+    name TEXT);
+    
+INSERT INTO hobbies (person_id, name) VALUES (1, "drawing");
+INSERT INTO hobbies (person_id, name) VALUES (1, "coding");
+INSERT INTO hobbies (person_id, name) VALUES (2, "dancing");
+INSERT INTO hobbies (person_id, name) VALUES (2, "coding");
+INSERT INTO hobbies (person_id, name) VALUES (3, "skating");
+INSERT INTO hobbies (person_id, name) VALUES (3, "rowing");
+INSERT INTO hobbies (person_id, name) VALUES (3, "drawing");
+INSERT INTO hobbies (person_id, name) VALUES (4, "coding");
+INSERT INTO hobbies (person_id, name) VALUES (4, "dilly-dallying");
+INSERT INTO hobbies (person_id, name) VALUES (4, "meowing");
+
+CREATE table friends (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    person1_id INTEGER,
+    person2_id INTEGER);
+
+INSERT INTO friends (person1_id, person2_id)
+    VALUES (1, 4);
+INSERT INTO friends (person1_id, person2_id)
+    VALUES (2, 3);
+ 
+SELECT persons.fullname, hobbies.name
+FROM persons
+JOIN hobbies
+ON persons.id = hobbies.person_id;
+
+/* ANSWER BROKEN DOWN:
+1. We want to select people's names from table 1 and the same people's hobbies from table 2:
+SELECT persons.fullname, hobbies.name
+
+2. All of this information is coming from table 1 
+(PERSONS):
+FROM persons
+
+3. We are joining information from table 2 (HOBBIES) so we join from hobbies:
+JOIN hobbies
+
+4. Specify what we are looking for, which is that the person ID is the same thing as the person ID from HOBBIES:
+ON persons.id = hobbies.person_id;
+
+All done! */
+
+
+
+/* Now, use another SELECT with a JOIN to show the names of each pair of friends, based on the data in the friends table. */
+
+SELECT a.fullname, b.fullname
+FROM friends
+JOIN persons a
+ON a.id = friends.person1_id
+JOIN persons b
+ON b.id = friends.person2_id;
+
+/*
+1. We want one friend's full name and the other's full name:
+SELECT a.fullname, b.fullname
+
+2. We are obtaining the information from the FRIENDS table which is going to be a number:
+FROM friends
+
+3. One table join:
+JOIN persons a
+ON a.id = friends.person1_id
+
+4. Second table join w specific parameters:
+JOIN persons b
+ON b.id = friends.person2_id;
+*/
