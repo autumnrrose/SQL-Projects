@@ -1,0 +1,44 @@
+/* What does the app's SQL look like? */
+
+CREATE TABLE Quizlet 
+(id INTEGER PRIMARY KEY AUTOINCREMENT, 
+name TEXT, 
+location TEXT, 
+premium_status TEXT, 
+student_status TEXT, 
+weekly_average_minutes INTEGER);
+
+insert into Quizlet values (1, "Autumn R.", "USA", "Premium", "student", 120);
+insert into Quizlet values (2, "Annie D.", "USA", "Premium", "student", 110);
+insert into Quizlet values (3, "Robert S.", "Poland", "standard", null, 10);
+insert into Quizlet values (4, "Taffi S.", "Hawaii", "standard", null, 15);
+insert into Quizlet values (5, "Zenith E.", "Malaysia", "premium", "student", 160);
+insert into Quizlet values (6, "Alex D.", "USA", "premium", "student", 200);
+insert into Quizlet values (7, "Emily G.", "USA", "premium", "student", 100);
+insert into Quizlet values (8, "Miles T.", "USA", "standard", null, 20);
+insert into Quizlet values (9, "Paige H.", "Canada", "premium", "student", 135);
+insert into Quizlet values (10, "Holly E.", "Canada", "premium", "student", 145);
+insert into Quizlet values (11, "Abby H.", "Sweden", "standard", null, 5);
+insert into Quizlet values (12, "Patrisha D.", "USA", "premium", "student", 200);
+
+/* I updated all columns that say "USA" to just "U.S." */
+
+SELECT * FROM Quizlet;
+update Quizlet set location = "U.S."
+where location = "USA";
+select * from Quizlet;
+
+/* we can see that most of our premium users are in the US and all students are premium users. Students are going to be the most important to reach in our audience! */
+
+Select location, premium_status, student_status
+FROM Quizlet;
+
+/* let's remove non-student to see where our premium user are */
+
+delete from Quizlet
+where premium_status = "standard";
+select * from Quizlet;
+
+/* now we can see where our premium subscriptions are coming from */
+
+
